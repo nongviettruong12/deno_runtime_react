@@ -1,38 +1,14 @@
-import { Application, Router } from "@oak/oak";
-import { oakCors } from "@tajpouria/cors";
-import routeStaticFilesFrom from "./util/routeStaticFilesFrom.ts";
+import { Router } from "@oak/oak";
 import data from "./data.json" with { type: "json" };
 
-export const app = new Application();
-const router = new Router();
+export const router = new Router();
 
-
-
-router.get("/api/dinosaurs", (context: any) => {
-    context.response.body = data;
+router.get("/api/dinosaurs", (ctx: any) => {
+  ctx.response.body = data;
 });
 
-router.get("/api/dinosaurs/:dinosaur", (context: any) => {
-    if (!context?.params?.dinosaur) {
-        context.response.body = "No dinosaur name provided.";
-    }
-
-    const dinosaur = data.find((item) =>
-        item.name.toLowerCase() === context.params.dinosaur.toLowerCase()
-    );
-
-    context.response.body = dinosaur ?? "No dinosaur found.";
+router.get("/api/dinosaurs/:dinosaur", (ctx: any) => {
+  const name = ctx.params?.dinosaur;
+  const dino = data.find((d: any) => d.name.toLowerCase() === name.toLowerCase());
+  ctx.response.body = dino ?? "No dinosaur found.";
 });
-
-app.use(oakCors());
-app.use(router.routes());
-app.use(router.allowedMethods());
-app.use(routeStaticFilesFrom([
-    `${Deno.cwd()}/dist`,
-    `${Deno.cwd()}/public`,
-]));
-
-if (import.meta.main) {
-    console.log("Server listening on port http://localhost:8000");
-    await app.listen({ port: 8000 });
-}
