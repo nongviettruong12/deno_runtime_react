@@ -13,14 +13,14 @@ export const Index = () => {
   }, []);
   return (
     <main id="content">
-      <h1> Dinosaur app</h1>
+      <h1>🦕 Dinosaur ap</h1>
       <p> click on a dinosaur below to learn more.</p>
       {dinosaurs.map((dinosaur: { name: string; description: string }) => {
         return (
           <Link
             to={`/${dinosaur.name.toLowerCase()}`}
             key={dinosaur.name}
-            className="dinosaur"
+            className="btn-primary"
           >
             {dinosaur.name}
           </Link>
