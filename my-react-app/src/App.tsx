@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Index } from "./pages";
-import { Dinosaur } from "./pages/Dinosaur";
+import { Index } from "./pages/index.tsx";
+import { Dinosaur } from "./pages/Dinosaur.tsx";
 function App() {
   return (
     <BrowserRouter>
